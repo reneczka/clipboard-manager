@@ -10,7 +10,7 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
-*.xcworkspace/
+.xcworkspace/xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 
