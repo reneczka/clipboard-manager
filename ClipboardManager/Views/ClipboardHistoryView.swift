@@ -97,7 +97,7 @@ struct ClipboardEntryView: View {
     @ViewBuilder
     private var typeIcon: some View {
         switch entry.dataType {
-        case .text:
+        case .text, .rtf:
             Image(systemName: "doc.text")
         case .image:
             Image(systemName: "photo")
@@ -105,8 +105,6 @@ struct ClipboardEntryView: View {
             Image(systemName: "link")
         case .html:
             Image(systemName: "chevron.left.forwardslash.chevron.right")
-        case .rtf:
-            Image(systemName: "text.badge.checkmark")
         }
     }
     
@@ -143,8 +141,17 @@ struct ClipboardEntryView: View {
                 }
             }
         case .rtf:
-            Text("Rich Text Content")
-                .foregroundColor(.secondary)
+            if let rtfData = entry.rtfData,
+               let attributedString = try? NSAttributedString(data: rtfData, 
+                                                            options: [.documentType: NSAttributedString.DocumentType.rtf],
+                                                            documentAttributes: nil) {
+                Text(AttributedString(attributedString))
+                    .lineLimit(2)
+                    .textSelection(.enabled)
+            } else {
+                Text("Rich Text Content")
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }
