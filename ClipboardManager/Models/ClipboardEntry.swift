@@ -6,7 +6,6 @@ struct ClipboardEntry: Identifiable, Codable, Equatable {
     let timestamp: Date
     let dataType: ClipboardDataType
     let text: String?
-    let imageData: Data?
     let htmlData: Data?
     let rtfData: Data?
     let url: URL?
@@ -15,7 +14,6 @@ struct ClipboardEntry: Identifiable, Codable, Equatable {
          timestamp: Date = Date(),
          dataType: ClipboardDataType,
          text: String? = nil,
-         imageData: Data? = nil,
          htmlData: Data? = nil,
          rtfData: Data? = nil,
          url: URL? = nil) {
@@ -23,7 +21,6 @@ struct ClipboardEntry: Identifiable, Codable, Equatable {
         self.timestamp = timestamp
         self.dataType = dataType
         self.text = text
-        self.imageData = imageData
         self.htmlData = htmlData
         self.rtfData = rtfData
         self.url = url
@@ -39,8 +36,6 @@ struct ClipboardEntry: Identifiable, Codable, Equatable {
         switch dataType {
         case .text:
             return text ?? "Empty text"
-        case .image:
-            return "Image"
         case .url:
             return url?.absoluteString ?? "Invalid URL"
         case .html:

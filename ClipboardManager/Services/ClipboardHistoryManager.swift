@@ -86,9 +86,6 @@ class ClipboardHistoryManager: ObservableObject {
         if let string = pasteboard.string(forType: .string) {
             print("Detected text:", string)
             addEntry(ClipboardEntry(dataType: .text, text: string))
-        } else if let image = pasteboard.data(forType: .tiff) ?? pasteboard.data(forType: .png) {
-            print("Detected image")
-            addEntry(ClipboardEntry(dataType: .image, imageData: image))
         }
     }
     
@@ -108,8 +105,6 @@ class ClipboardHistoryManager: ObservableObject {
                 if entry.text == lastEntry.text { return }
             case (.url, .url):
                 if entry.url == lastEntry.url { return }
-            case (.image, .image):
-                if entry.imageData == lastEntry.imageData { return }
             case (.html, .html):
                 if entry.htmlData == lastEntry.htmlData { return }
             case (.rtf, .rtf):
@@ -159,10 +154,6 @@ class ClipboardHistoryManager: ObservableObject {
             if let url = entry.url {
                 pasteboard.setString(url.absoluteString, forType: .string)
                 pasteboard.setString(url.absoluteString, forType: .URL)
-            }
-        case .image:
-            if let imageData = entry.imageData {
-                pasteboard.setData(imageData, forType: .tiff)
             }
         case .html:
             if let htmlData = entry.htmlData {

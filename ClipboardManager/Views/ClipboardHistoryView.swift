@@ -99,8 +99,6 @@ struct ClipboardEntryView: View {
         switch entry.dataType {
         case .text, .rtf:
             Image(systemName: "doc.text")
-        case .image:
-            Image(systemName: "photo")
         case .url:
             Image(systemName: "link")
         case .html:
@@ -114,14 +112,6 @@ struct ClipboardEntryView: View {
         case .text:
             Text(entry.text ?? "")
                 .lineLimit(2)
-        case .image:
-            if let imageData = entry.imageData,
-               let nsImage = NSImage(data: imageData) {
-                Image(nsImage: nsImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 100)
-            }
         case .url:
             if let url = entry.url {
                 Link(url.absoluteString, destination: url)
